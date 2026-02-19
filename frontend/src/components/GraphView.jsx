@@ -5,19 +5,21 @@ export default function GraphView({ data }) {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    if (!data) return;
+    if (!data || !containerRef.current) return;
 
     const nodesMap = new Map();
     const edges = [];
 
-    data.fraud_rings.slice(0, 50).forEach((ring) => {
+    // Build nodes & edges from fraud rings
+    data.fraud_rings.forEach((ring) => {
       const members = ring.member_accounts;
+
       members.forEach((acc) => {
         if (!nodesMap.has(acc)) {
           nodesMap.set(acc, {
             id: acc,
             label: acc,
-            color: "red",
+            color: "#ef4444", // red for suspicious nodes
           });
         }
       });
@@ -29,19 +31,46 @@ export default function GraphView({ data }) {
 
     const nodes = Array.from(nodesMap.values());
 
-    const network = new Network(containerRef.current, { nodes, edges }, {
-      nodes: { shape: "dot", size: 15 },
-      edges: { arrows: "to" },
-      physics: { stabilization: true },
-    });
+    const network = new Network(
+      containerRef.current,
+      { nodes, edges },
+      {
+        nodes: {
+          shape: "dot",
+          size: 16,
+          font: { color: "#e5e7eb" },
+        },
+        edges: {
+          arrows: "to",
+          color: { color: "rgba(255,255,255,0.5)" },
+        },
+        physics: {
+          stabilization: true,
+        },
+        interaction: {
+          hover: true,
+        },
+      }
+    );
 
-    return () => network.destroy();
+    return () => {
+      network.destroy();
+    };
   }, [data]);
 
   return (
     <div>
       <h3 style={{ marginBottom: 12 }}>🔗 Fraud Network Visualization</h3>
-      <div ref={containerRef} style={{ height: "400px", border: "1px solid #ccc" }} />
+      <div
+        ref={containerRef}
+        style={{
+          height: "500px",
+          width: "100%",
+          border: "1px solid rgba(255,255,255,0.12)",
+          borderRadius: 12,
+          background: "linear-gradient(135deg, #020617, #0f172a)",
+        }}
+      />
     </div>
   );
 }
