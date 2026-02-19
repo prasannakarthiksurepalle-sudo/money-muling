@@ -13,7 +13,9 @@ export default function JsonDownload({ data }) {
 
   return (
     <div style={{ marginTop: 20 }}>
-      <button onClick={download}>⬇️ Download JSON Report</button>
+      <button onClick={download} className="button">
+        ⬇️ Download JSON Report
+      </button>
     </div>
   );
 }

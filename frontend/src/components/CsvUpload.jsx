@@ -24,12 +24,25 @@ export default function CsvUpload({ onResult }) {
     }
   }
 
-  return (
-    <div style={{ marginBottom: 20 }}>
-      <input type="file" accept=".csv" onChange={(e) => setFile(e.target.files[0])} />
-      <button onClick={handleUpload} disabled={loading} style={{ marginLeft: 10 }}>
-        {loading ? "Processing..." : "Upload CSV"}
-      </button>
-    </div>
-  );
+return (
+  <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+    <input
+      type="file"
+      accept=".csv"
+      onChange={(e) => setFile(e.target.files[0])}
+      style={{
+        background: "#020617",
+        color: "#e5e7eb",
+        padding: "8px",
+        borderRadius: "8px",
+        border: "1px solid rgba(255,255,255,0.2)",
+        flex: 1,
+      }}
+    />
+    <button onClick={handleUpload} disabled={loading} className="button">
+      {loading ? "Processing..." : "Upload CSV"}
+    </button>
+  </div>
+);
+
 }

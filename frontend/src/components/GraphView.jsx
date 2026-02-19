@@ -40,7 +40,7 @@ export default function GraphView({ data }) {
 
   return (
     <div>
-      <h3>🔗 Fraud Network Graph</h3>
+      <h3 style={{ marginBottom: 12 }}>🔗 Fraud Network Visualization</h3>
       <div ref={containerRef} style={{ height: "400px", border: "1px solid #ccc" }} />
     </div>
   );
