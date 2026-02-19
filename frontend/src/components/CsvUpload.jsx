@@ -13,7 +13,11 @@ export default function CsvUpload({ onResult }) {
       const result = await uploadCsv(file);
       onResult(result);
     } catch (err) {
-      alert("Upload failed. Check backend.");
+      const msg =
+      err?.response?.data?.detail ||
+      err?.message ||
+      "Upload failed. Check backend logs.";
+      alert(msg);
       console.error(err);
     } finally {
       setLoading(false);

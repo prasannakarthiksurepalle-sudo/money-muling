@@ -15,4 +15,6 @@ def detect_shell_networks(graph):
                             })
                             ring_id += 1
 
-    return rings
+    MAX_SHELLS = 100
+    return rings[:MAX_SHELLS]
+

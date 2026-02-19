@@ -15,7 +15,12 @@ async def upload_csv(file: UploadFile = File(...)):
     if not file.filename.endswith(".csv"):
         raise HTTPException(status_code=400, detail="Only CSV files allowed")
     try:
-        df = pd.read_csv(file.file)
+        if len(transactions) > 2000:
+    # Skip heavy cycle detection for large datasets
+            cycles = detect_cycles(subgraph)  # bounded version only
+        else:
+            cycles = detect_cycles(subgraph)
+
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid or empty CSV file")
 
