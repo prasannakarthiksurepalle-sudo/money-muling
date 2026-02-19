@@ -1,12 +1,12 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 import pandas as pd
 
-from .graph_builder import build_graph
-from .detectors.cycles import detect_cycles
-from .detectors.smurfing import detect_smurfing
-from .detectors.shell_networks import detect_shell_networks
-from .scoring import compute_scores
-from .schema import build_response
+from graph_builder import build_graph
+from detectors.cycles import detect_cycles
+from detectors.smurfing import detect_smurfing
+from detectors.shell_networks import detect_shell_networks
+from scoring import compute_scores
+from schema import build_response
 
 router = APIRouter()
 
