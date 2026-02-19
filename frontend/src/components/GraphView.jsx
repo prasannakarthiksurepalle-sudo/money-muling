@@ -10,7 +10,7 @@ export default function GraphView({ data }) {
     const nodesMap = new Map();
     const edges = [];
 
-    data.fraud_rings.forEach((ring) => {
+    data.fraud_rings.slice(0, 50).forEach((ring) => {
       const members = ring.member_accounts;
       members.forEach((acc) => {
         if (!nodesMap.has(acc)) {

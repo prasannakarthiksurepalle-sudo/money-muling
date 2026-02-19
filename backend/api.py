@@ -27,10 +27,14 @@ async def upload_csv(file: UploadFile = File(...)):
     transactions = df.to_dict(orient="records")
     graph = build_graph(transactions)
 
+    active_nodes = [n for n in graph.nodes() if graph.degree(n) > 1]
+    subgraph = graph.subgraph(active_nodes)
+
     rings = []
-    rings.extend(detect_cycles(graph))
+    rings.extend(detect_cycles(subgraph))
     rings.extend(detect_smurfing(transactions))
-    rings.extend(detect_shell_networks(graph))
+    rings.extend(detect_shell_networks(subgraph))
+
 
     suspicious_accounts, fraud_rings = compute_scores(rings)
 

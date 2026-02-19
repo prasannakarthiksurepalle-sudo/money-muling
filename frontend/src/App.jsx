@@ -15,7 +15,7 @@ export default function App() {
 
       {data && (
         <>
-          <GraphView data={data} />
+          <GraphView data={{ ...data, fraud_rings: data.fraud_rings.slice(0, 50) }} />
           <FraudTable rings={data.fraud_rings} />
           <JsonDownload data={data} />
         </>
