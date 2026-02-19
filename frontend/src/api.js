@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "http://localhost:8000";
+const API_BASE = "https://money-muling-4.onrender.com/";
 
 export async function uploadCsv(file) {
   const formData = new FormData();
