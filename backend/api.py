@@ -1,6 +1,8 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 import pandas as pd
 from io import BytesIO
+import time
+
 
 from graph_builder import build_graph
 from detectors.cycles import detect_cycles
@@ -15,6 +17,7 @@ MAX_ROWS = 20000  # safety limit for large CSVs
 
 @router.post("/upload-csv")
 async def upload_csv(file: UploadFile = File(...)):
+    start_time = time.perf_counter()
     # 1. Basic filename validation
     if not file.filename or not file.filename.lower().endswith(".csv"):
         raise HTTPException(status_code=400, detail="Only CSV files are allowed.")
@@ -73,13 +76,15 @@ async def upload_csv(file: UploadFile = File(...)):
 
     # 11. Compute scores
     suspicious_accounts, fraud_rings = compute_scores(rings)
+    elapsed = time.perf_counter() - start_time
+
 
     # 12. Build response
     response = build_response(
         suspicious_accounts=suspicious_accounts,
         fraud_rings=fraud_rings,
         total_accounts=len(graph.nodes),
-        processing_time=0.0  # you can add real timing later
+        processing_time=round(elapsed, 3)
     )
 
     return response
